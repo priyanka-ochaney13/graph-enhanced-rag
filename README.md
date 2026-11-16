@@ -13,6 +13,31 @@ An agentic RAG API built with LangGraph. The system can:
 - Run locally with Docker
 - Evaluate multiple RAG configurations
 
+
+![alt text](screenshots/image-2.png)
+
+![alt text](screenshots/image-3.png)
+
+![alt text](screenshots/image-4.png)
+
+![alt text](screenshots/image-5.png)
+
+![alt text](screenshots/image-6.png)
+
+![alt text](screenshots/image-7.png)
+
+![alt text](screenshots/image-8.png)
+
+![alt text](screenshots/image-9.png)
+
+below was output when i logged in as an employee so confidential info is shared with certain auth role only
+
+![alt text](screenshots/image-10.png)
+
+Full agent is ~1.6× slower and ~2.5× more expensive per query than vector-only but ~20 pp more faithful
+
+![alt text](screenshots/image.png)
+
 ## Quick Start
 
 ### 1. Configure environment variables
@@ -45,26 +70,6 @@ curl -X POST http://localhost:8000/query \
   -H "Content-Type: application/json" \
   -d '{"query":"Who founded Apple?"}'
 
-![alt text](screenshots/image-2.png)
 
-![alt text](screenshots/image-3.png)
 
-![alt text](screenshots/image-4.png)
 
-![alt text](screenshots/image-5.png)
-
-![alt text](screenshots/image-6.png)
-
-![alt text](screenshots/image-7.png)
-
-![alt text](screenshots/image-8.png)
-
-![alt text](screenshots/image-9.png)
-
-below was output when i logged in as an employee so confidential info is shared with certain auth role only
-
-![alt text](screenshots/image-10.png)
-
-Full agent is ~1.6× slower and ~2.5× more expensive per query than vector-only but ~20 pp more faithful
-
-![alt text](screenshots/image.png)
