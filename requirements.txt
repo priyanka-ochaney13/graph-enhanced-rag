@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+groq
+qdrant-client
+neo4j
+tavily-python
+langgraph
+langchain-core
+pydantic
+pydantic-settings
+tiktoken
+langfuse
+httpx
