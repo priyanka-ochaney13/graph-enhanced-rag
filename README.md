@@ -1,25 +1,49 @@
-![architecture](screenshots/image-1.png)
-
 # Agentic, Graph-Enhanced RAG
 
-An API where a LangGraph agent decomposes multi-hop questions, routes to **vector search**, a **Neo4j knowledge graph**, **SQL**, or the **web**, grades retrieval quality, rewrites queries, and retries. It enforces **per-document ACLs at retrieval time**, screens for **prompt injection**, tracks **cost and latency budgets**, and ships with **Docker deployment** and an **eval harness**.
+![Architecture](screenshots/image-1.png)
+
+An agentic RAG API built with LangGraph. The system can:
+
+- Decompose multi-hop questions
+- Route queries to vector search, Neo4j, SQL, or web search
+- Grade retrieval quality and rewrite queries
+- Enforce per-document ACLs during retrieval
+- Detect prompt injection
+- Track cost and latency budgets
+- Run locally with Docker
+- Evaluate multiple RAG configurations
 
 ## Quick Start
 
-```bash
-cp .env.example .env   # add GROQ_API_KEY and TAVILY_API_KEY
-docker compose up -d --build
-python -m src.ingestion.seed_data   # seed Qdrant + Neo4j
-curl -X POST http://localhost:8000/query \
-  -H "Authorization: Bearer token-public" \
-  -H "Content-Type: application/json" \
-  -d '{"query":"Who founded Apple?"}'
+### 1. Configure environment variables
 
+```bash
+cp .env.example .env
+
+Add your credentials to .env:
+
+GROQ_API_KEY=your-groq-api-key
+TAVILY_API_KEY=your-tavily-api-key
+
+2. Start the services
+docker compose up -d --build
+
+3. Seed the databases
+python -m src.ingestion.seed_data
+This seeds Qdrant and Neo4j with the sample data.
+
+
+4. Create the Python environment
 py -3.12 -m venv .venv
 .\.venv\Scripts\python -m pip install --upgrade pip
 .\.venv\Scripts\python -m pip install -r requirements.txt
 .\.venv\Scripts\python -m pip install -r requirements-eval.txt
 
+5. Query the API
+curl -X POST http://localhost:8000/query \
+  -H "Authorization: Bearer token-public" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"Who founded Apple?"}'
 
 ![alt text](screenshots/image-2.png)
 
