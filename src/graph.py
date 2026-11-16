@@ -1,7 +1,7 @@
 from langgraph.graph import StateGraph, START, END
 from src.state import GraphState
 from src.nodes.planner import planner_node
-from src.nodes.router import route_tool
+from src.nodes.router import route_tool as default_route_tool
 from src.nodes.grader import grade_node
 from src.nodes.rewriter import rewrite_node
 from src.nodes.generator import generator_node
@@ -14,10 +14,15 @@ from src.config import settings
 from src.observability.budget import BudgetTracker
 from src.security.injection import sanitize_output
 
+def route_tool(state: GraphState) -> str:
+    if settings.rag_mode == "vector_only":
+        return "vector"
+
+    return default_route_tool(state)
 
 def _retrieve(state: GraphState, tool: str) -> GraphState:
     roles = state["user_roles"]
-    task = state["current_task"]
+    task = state["query"] if tool == "graph" else state["current_task"]
     if tool == "vector":
         docs = retrieve_vector(task, roles)
     elif tool == "graph":
@@ -32,7 +37,6 @@ def _retrieve(state: GraphState, tool: str) -> GraphState:
     state["retrieved_docs"] = docs
     state["relevant_docs"] = []
     state["grade_score"] = 0.0
-    state["rewrite_count"] = 0
     return state
 
 
@@ -53,11 +57,16 @@ def web_node(state: GraphState) -> GraphState:
 
 
 def route_after_grade(state: GraphState) -> str:
+    if settings.rag_mode == "vector_only":
+        return "generator"
+    
     if state["grade_score"] >= 0.5:
         return "generator"
+
     if state["rewrite_count"] < settings.max_rewrites:
         return "rewriter"
-    return "web"
+
+    return "generator"
 
 
 def route_after_verify(state: GraphState) -> str:

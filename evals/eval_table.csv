@@ -1,0 +1,4 @@
+configuration,faithfulness,answer_relevancy,n_questions
+vector_only,0.722,0.831,3
+corrective,0.889,0.835,3
+full,0.889,0.818,3

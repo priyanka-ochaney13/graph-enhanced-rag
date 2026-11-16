@@ -26,5 +26,6 @@ class Settings(BaseSettings):
     max_rewrites: int = 2
     max_verify_loops: int = 1
 
+    rag_mode: str = "full"
 
 settings = Settings()
